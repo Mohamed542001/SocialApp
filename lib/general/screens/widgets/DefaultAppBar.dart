@@ -12,6 +12,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? action;
   final double? size;
   final double? elev;
+  final double? leadingWidth;
   final Color? color,bgColor,iconColor;
   final bool? back,center;
 
@@ -27,7 +28,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.bgColor,
     this.back=true,
     this.center=false,
-    this.iconColor,
+    this.iconColor, this.leadingWidth,
   }) : super(key: key);
 
   @override
@@ -37,23 +38,23 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: elev??0,
       title: CustomText(
         title: '$title',
-        color: color??Colors.white,
-        size: 25,
+        color: color??AppColors.black,
+        size: 20,
       ),
       centerTitle: center,
       titleSpacing: 0,
-      backgroundColor: bgColor??AppColors.primary,
+      backgroundColor: bgColor??AppColors.white,
       leading: leading?? Offstage(
         offstage: !back!,
         child: IconButton(
           onPressed: (){Navigator.of(context).pop();},
           icon: Icon(Icons.arrow_back_ios_outlined,
             size: 16,
-            color: iconColor??Colors.white,
+            color: iconColor??Colors.black,
           ),
         ),
       ),
-
+      leadingWidth: leadingWidth??35,
       actions: action,
       bottom: bottom,
 

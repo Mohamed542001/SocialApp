@@ -29,20 +29,16 @@ class _HomeState extends State<Home> {
         var cubit = HomeCubit.get(context);
         if (data.isEmailVerified) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.white,
-              elevation: 0,
-            ),
+            appBar: DefaultAppBar(),
             body: BuildNotVerificationView(data: data),
           );
         } else {
           return Scaffold(
-            appBar: AppBar(
-              title: CustomText(
-                title: '${data.titles[cubit.currentIndex]}',
-                size: 20,
-              ),
-              actions: [
+            appBar: DefaultAppBar(
+              title: '${data.titles[cubit.currentIndex]}',
+              back: false,
+              leadingWidth: 10,
+              action: [
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.notifications_none)),

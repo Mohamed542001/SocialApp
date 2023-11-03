@@ -7,6 +7,7 @@ import 'CustomText.dart';
 class DefaultButton extends StatelessWidget {
 
   final String? title;
+  final Widget? child;
   final Function()? onTap;
   final Color? color;
   final Color? textColor;
@@ -31,7 +32,7 @@ class DefaultButton extends StatelessWidget {
         this.width,
         this.elev,
         this.margin,
-        this.borderRadius, this.height
+        this.borderRadius, this.height, this.child
       }
       ) : super(key: key);
 
@@ -54,7 +55,7 @@ class DefaultButton extends StatelessWidget {
           ),
           elevation: elev??0,
         ),
-        child: CustomText(
+        child: child??CustomText(
           color: textColor??AppColors.textColor,
           size: textSize??20,
           title: '$title',

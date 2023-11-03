@@ -28,14 +28,16 @@ class RegisterCubit extends Cubit<RegisterStates> {
       print(value.user?.uid);
 
       RegisterModel model = RegisterModel(
-          name: name,
-          email: email,
-          phone: phone,
-          uId: value.user?.uid,
-          bio: 'write your bio....',
-          image:
-              'https://img.freepik.com/free-photo/man-listening-music-by-wireless-earphones_53876-98050.jpg?w=996&t=st=1698067585~exp=1698068185~hmac=e5811e1525fd2cd5908a42077858f7c30cb42e24d2171608f343b9f271e2517f',
-          isEmailVerification: false);
+        name: name,
+        email: email,
+        phone: phone,
+        uId: value.user?.uid,
+        bio: 'write your bio....',
+        image:
+            'https://i.stack.imgur.com/l60Hf.png',
+        cover: "https://tokystorage.s3.amazonaws.com/images/default-cover.png",
+        isEmailVerification: false,
+      );
 
       await FirebaseFirestore.instance
           .collection("users")

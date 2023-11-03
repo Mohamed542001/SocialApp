@@ -10,6 +10,18 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return BlocProvider(
+        create: (context)=>HomeCubit()..getUsers(),
+        child: BlocConsumer<HomeCubit,HomeState>(
+          listener: (context,state){},
+          builder: (context,state){
+            var cubit = HomeCubit.get(context);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: BuildChatItem(cubit: cubit,),
+            );
+          },
+        ),
+      );
   }
 }

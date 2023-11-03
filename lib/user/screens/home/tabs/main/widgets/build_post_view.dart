@@ -1,8 +1,19 @@
 part of 'main_widgets_imports.dart';
 
 class BuildPostView extends StatelessWidget {
-  const BuildPostView({Key? key}) : super(key: key);
-
+  const BuildPostView(
+      {Key? key,
+      required this.posts,
+      required this.i,
+      required this.userModel,
+      required this.cubit,
+      required this.state})
+      : super(key: key);
+  final List<PostModel> posts;
+  final int i;
+  final RegisterModel? userModel;
+  final HomeCubit cubit;
+  final HomeState state;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -12,13 +23,13 @@ class BuildPostView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: NetworkImage(
-                      "https://as1.ftcdn.net/v2/jpg/03/55/90/62/1000_F_355906263_qzyQNyimlPVXcscyTRAvkC7s9ZTz6BOm.jpg"),
+                  backgroundImage: NetworkImage("${posts[i].image}"),
                 ),
                 SizedBox(
                   width: 15,
@@ -30,7 +41,7 @@ class BuildPostView extends StatelessWidget {
                       Row(
                         children: [
                           CustomText(
-                            title: "Mohamed Salama",
+                            title: posts[i].name,
                             size: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -48,7 +59,7 @@ class BuildPostView extends StatelessWidget {
                         height: 5,
                       ),
                       CustomText(
-                        title: "January 21, 2023 at 10:39 PM",
+                        title: posts[i].dateTime,
                         size: 14,
                         fontWeight: FontWeight.bold,
                         color: AppColors.grey,
@@ -67,37 +78,39 @@ class BuildPostView extends StatelessWidget {
             ),
             Divider(thickness: 1),
             CustomText(
-              title:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+              title: posts[i].text,
             ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              width: double.infinity,
-              child: Wrap(
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: CustomText(
-                      title: "#Software_Development",
-                      color: Colors.blue,
-                      size: 15,
+            // Container(
+            //   margin: EdgeInsets.symmetric(vertical: 10),
+            //   width: double.infinity,
+            //   child: Wrap(
+            //     children: [
+            //       InkWell(
+            //         onTap: () {},
+            //         child: CustomText(
+            //           title: "#Software_Development",
+            //           color: Colors.blue,
+            //           size: 15,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            if (posts[i].postImage != "")
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Container(
+                  height: 140,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    image: DecorationImage(
+                      image: NetworkImage("${posts[i].postImage}"),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              height: 140,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                image: DecorationImage(
-                  image: NetworkImage(
-                      "https://img.freepik.com/premium-photo/world-animal-day-world-wildlife-day-groups-wild-beasts-were-gathered-hands-people_34998-712.jpg?w=1060"),
-                  fit: BoxFit.cover,
                 ),
               ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
@@ -106,7 +119,7 @@ class BuildPostView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: InkWell(
-                      onTap: (){},
+                      onTap: () {},
                       child: Row(
                         children: [
                           Icon(
@@ -118,7 +131,7 @@ class BuildPostView extends StatelessWidget {
                             width: 5,
                           ),
                           CustomText(
-                            title: "1200",
+                            title: "${cubit.likes[i]}",
                             size: 14,
                             color: AppColors.grey,
                           ),
@@ -129,7 +142,7 @@ class BuildPostView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: InkWell(
-                      onTap: (){},
+                      onTap: () {},
                       child: Row(
                         children: [
                           Icon(
@@ -141,7 +154,7 @@ class BuildPostView extends StatelessWidget {
                             width: 5,
                           ),
                           CustomText(
-                            title: "521 comments",
+                            title: "${cubit.allComments.length} comments",
                             size: 14,
                             color: AppColors.grey,
                           ),
@@ -152,7 +165,9 @@ class BuildPostView extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(thickness: 1,),
+            Divider(
+              thickness: 1,
+            ),
             Row(
               children: [
                 Expanded(
@@ -160,22 +175,32 @@ class BuildPostView extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 20,
-                        backgroundImage: NetworkImage(
-                            "https://as1.ftcdn.net/v2/jpg/03/55/90/62/1000_F_355906263_qzyQNyimlPVXcscyTRAvkC7s9ZTz6BOm.jpg"),
+                        backgroundImage: NetworkImage("${userModel?.image}"),
                       ),
                       SizedBox(
                         width: 15,
                       ),
-                      CustomText(
-                        title: "write a comment ...",
-                        size: 14,
-                        color: AppColors.grey,
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PostComment(index: i, postId: cubit.postsId[i],),
+                            ),
+                          );
+                        },
+                        child: CustomText(
+                          title: "write a comment ...",
+                          size: 14,
+                          color: AppColors.grey,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 InkWell(
-                  onTap: (){},
+                  onTap: () {
+                    cubit.likePost("${cubit.postsId[i]}");
+                  },
                   child: Row(
                     children: [
                       Icon(
@@ -198,7 +223,7 @@ class BuildPostView extends StatelessWidget {
                   width: 20,
                 ),
                 InkWell(
-                  onTap: (){},
+                  onTap: () {},
                   child: Row(
                     children: [
                       Icon(
@@ -219,7 +244,6 @@ class BuildPostView extends StatelessWidget {
                 ),
               ],
             ),
-
           ],
         ),
       ),

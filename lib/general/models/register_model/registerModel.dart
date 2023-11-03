@@ -6,6 +6,7 @@ class RegisterModel {
       this.phone,
       this.uId,
       this.image,
+      this.cover,
       this.bio,
       this.isEmailVerification,
   });
@@ -16,6 +17,7 @@ class RegisterModel {
     phone = json['phone'];
     uId = json['uId'];
     image = json['image'];
+    cover = json['cover'];
     bio = json['bio'];
     isEmailVerification = json['isEmailVerification'];
   }
@@ -24,6 +26,7 @@ class RegisterModel {
   String? phone;
   String? uId;
   String? image;
+  String? cover;
   String? bio;
   bool? isEmailVerification;
 
@@ -34,6 +37,7 @@ class RegisterModel {
     map['phone'] = phone;
     map['uId'] = uId;
     map['image'] = image;
+    map['cover'] = cover;
     map['bio'] = bio;
     map['isEmailVerification'] = isEmailVerification;
 

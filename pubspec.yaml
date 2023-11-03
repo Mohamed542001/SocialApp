@@ -39,11 +39,14 @@ dependencies:
   flutter_staggered_animations:
   fluttertoast:
   flutter_launcher_icons:
+  image_picker:
 
   #firebase
   firebase_core: ^2.17.0
   firebase_auth: ^4.10.1
   cloud_firestore:
+  firebase_storage: ^11.0.3
+  firebase_messaging:
 
 
 
